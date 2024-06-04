@@ -1,0 +1,13 @@
+button {
+  color: #000000;
+  padding: 0.3em 0.7em;
+  font-size: 1em;
+  border-radius: 20px !important;
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: rgb(140, 196, 33);
+  margin-right: 10px;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}

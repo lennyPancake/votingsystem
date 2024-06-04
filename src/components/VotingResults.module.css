@@ -1,0 +1,9 @@
+.main {
+  color: white;
+  margin: 1%;
+  background-color: #393939;
+  border-radius: 20px;
+  border: 2px solid black;
+  padding: 1%;
+  border-style: outset;
+}

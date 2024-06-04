@@ -1,0 +1,44 @@
+.main {
+  padding: 20px;
+  background-color: #2c2c2c;
+  color: white;
+  border-radius: 8px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.list {
+  min-width: 400px;
+  width: 50%;
+  list-style-type: none;
+  background-color: #393939;
+  border-radius: 20px;
+  border: 2px solid black;
+  padding: 1%;
+  border-style: outset;
+}
+
+.listItem {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.listItem h3 {
+  margin: 0 0 10px 0;
+}
+
+.listItem p {
+  margin: 5px 0;
+}
+
+.listItem ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.listItem ul li {
+  margin: 5px 0;
+}
