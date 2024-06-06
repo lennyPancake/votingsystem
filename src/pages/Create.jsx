@@ -3,15 +3,16 @@ import Web3 from "web3";
 import { VOTING_ABI, VOTING_ADDRESS } from "../config";
 import { Form, Container, InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import withAuth from "../components/withAuth";
 import style from "./Create.module.css";
 
 const CreateVotingForm = () => {
   const [votingName, setVotingName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
   const [options, setOptions] = useState([]);
   const [optionText, setOptionText] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [revealed, setRevelead] = useState(false);
 
   const handleOptionChange = (e, index) => {
     const updatedOptions = [...options];
@@ -49,10 +50,9 @@ const CreateVotingForm = () => {
         .createVoting(
           votingName,
           description,
-          category,
           finalOptions,
-          endDateInSeconds,
-          accounts[0]
+          revealed,
+          endDateInSeconds
         )
         .send({ from: accounts[0] });
       console.log("Голосование успешно создано!");
@@ -82,16 +82,6 @@ const CreateVotingForm = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </Form.Group>
-
-        <Form.Group controlId="category" className="mt-3">
-          <Form.Label>Категория голосования</Form.Label>
-          <Form.Control
-            type="text"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          />
-        </Form.Group>
-
         <Form.Group controlId="options" className="mt-3">
           <Form.Label>Варианты ответа</Form.Label>
           {options.map((option, index) => (
@@ -123,6 +113,15 @@ const CreateVotingForm = () => {
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
           />
+          <Form.Check
+            type="switch"
+            id="disabled-custom-switch"
+            label="Показывать результаты"
+            checked={revealed}
+            onChange={(e) => {
+              setRevelead(e.target.checked);
+            }}
+          />
         </Form.Group>
 
         <button type="submit">Создать голосование</button>
@@ -131,4 +130,4 @@ const CreateVotingForm = () => {
   );
 };
 
-export default CreateVotingForm;
+export default withAuth(CreateVotingForm);

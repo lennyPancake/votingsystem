@@ -6,10 +6,6 @@ import Login from "../pages/Login";
 const withAuth = (Component) => () => {
   const { wallet, isConnecting, connectMetaMask } = useMetaMask();
   const navigate = useNavigate();
-  if (isConnecting) {
-    return <div>Идет подключение...</div>; // Возвращаем какой-либо загрузочный компонент либо сообщение
-  }
-
   if (!wallet.accounts.length) {
     return <Login />;
   }

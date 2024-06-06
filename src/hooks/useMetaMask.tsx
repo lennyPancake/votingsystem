@@ -110,51 +110,40 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     () => _updateWallet(),
     [_updateWallet]
   );
-
-  const switchToNetwork = async (chainId: string, networkData: any) => {
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId }],
-      });
-    } catch (switchError: any) {
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [networkData],
-          });
-        } catch (addError) {
-          console.error(
-            `Failed to add the network: ${networkData.chainName}`,
-            addError
-          );
-        }
-      } else {
-        console.error(
-          `Failed to switch to the network: ${networkData.chainName}`,
-          switchError
-        );
-      }
-    }
-  };
-
   const switchToCorrectNetwork = async () => {
-    const sepoliaChainId = "0xaa36a7"; // 11155111 in hexadecimal
-    const sepoliaNetworkData = {
-      chainId: sepoliaChainId,
-      chainName: "Sepolia",
-      rpcUrls: ["https://rpc.sepolia.org"],
+    const ganacheChainId = "0x539"; // 1337 in hex
+    const ganacheNetworkData = {
+      chainId: ganacheChainId,
+      chainName: "Ganache",
+      rpcUrls: ["http://127.0.0.1:7545"],
       nativeCurrency: {
-        name: "Sepolia ETH",
+        name: "Ethereum",
         symbol: "ETH",
         decimals: 18,
       },
     };
 
-    await switchToNetwork(sepoliaChainId, sepoliaNetworkData);
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: ganacheChainId }],
+      });
+    } catch (switchError: any) {
+      // This error code indicates that the chain has not been added to MetaMask
+      if (switchError.code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [ganacheNetworkData],
+          });
+        } catch (addError) {
+          console.error("Failed to add the Ganache network", addError);
+        }
+      } else {
+        console.error("Failed to switch to the Ganache network", switchError);
+      }
+    }
   };
-
   const updateWallet = useCallback(
     (accounts: any) => _updateWallet(accounts),
     [_updateWallet]
@@ -165,7 +154,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
     if (window.ethereum) {
       const web3 = new Web3(window.ethereum);
-      const message = `Confirm authorization in voting system with your wallet: ${selectedAddress}`;
+      const message = `Проверьте ваш аккаунт. Чтобы завершить подключение, вы должны подписать сообщение в вашем кошельке, чтобы подтвердить, что вы являетесь владельцем этого аккаунта
+      Confirm authorization in voting system with your wallet: ${selectedAddress}`;
 
       try {
         const signature = await web3.eth.personal.sign(
@@ -239,15 +229,15 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         method: "eth_chainId",
       });
 
-      if (currentChainId !== "0xaa36a7") {
-        // 11155111 in hexadecimal
+      if (currentChainId !== "0x539") {
+        // 1337 in hexadecimal
         await switchToCorrectNetwork();
       }
 
       clearError();
       updateWallet(accounts);
 
-      //await handleSignMessage(accounts[0]);
+      await handleSignMessage(accounts[0]);
     } catch (err: any) {
       setErrorMessage(err.message);
     }
@@ -276,6 +266,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         isConnecting={isConnecting}
         isSigning={isSigning}
         isSuccess={isSuccess}
+        errorMessage={errorMessage}
       />
     </MetaMaskContext.Provider>
   );

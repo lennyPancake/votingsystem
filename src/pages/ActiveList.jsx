@@ -13,31 +13,40 @@ const ActiveList = () => {
     const fetchData = async () => {
       const web3 = new Web3(window.ethereum);
       const contract = new web3.eth.Contract(VOTING_ABI, VOTING_ADDRESS);
-      const votingData = await contract.methods.getVotingSessions().call();
 
-      const {
-        0: ids,
-        1: names,
-        2: descriptions,
-        3: endDates,
-        4: statuses,
-        5: creators,
-      } = votingData;
+      try {
+        const votingData = await contract.methods.getVotingSessions().call();
 
-      const sessions = ids.map((id, index) => ({
-        id,
-        name: names[index],
-        description: descriptions[index],
-        endDate: Number(endDates[index]),
-        isActive: statuses[index],
-        creator: creators[index],
-      }));
+        console.log("Данные голосования:", votingData);
 
-      setVotingSessions(sessions);
+        const {
+          0: ids,
+          1: names,
+          2: descriptions,
+          3: endDates,
+          4: statuses,
+          5: creators,
+        } = votingData;
+
+        const sessions = ids.map((id, index) => ({
+          id: id.toString(), // Преобразуем BN в строку
+          name: names[index],
+          description: descriptions[index],
+          endDate: Number(endDates[index]), // Преобразуем BN в число
+          isActive: statuses[index],
+          creator: creators[index],
+        }));
+
+        console.log("Сессии:", sessions);
+
+        setVotingSessions(sessions);
+      } catch (error) {
+        console.error("Ошибка при получении данных голосования:", error);
+      }
     };
+
     fetchData();
   }, []);
-
   return (
     <div className={style.main}>
       <h2>Список голосований</h2>

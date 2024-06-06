@@ -1,8 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import Profile from "./pages/Profile";
-import List from "./pages/ActiveList";
 import Create from "./pages/Create";
 import Voting from "./pages/Voting";
 import Navigation from "./components/Navigation/Navigation"; // Импортируем Navigation
@@ -19,11 +17,11 @@ function App() {
     <BrowserRouter>
       <Navigation />
       <Routes>
-        <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<Create />} />
         <Route path="/voting" element={<ActiveList />} />
         <Route path="/voting/:id" element={<Voting />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/inactive" element={<InActiveList />} />
         <Route path="/*" element={<Navigate to="/home" replace />} />
       </Routes>

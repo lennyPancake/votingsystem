@@ -7,7 +7,10 @@ const Login = () => {
     <div className={style.main}>
       {" "}
       <header>
-        <h1>Добро пожаловать в систему электронных голосований на блокчейне</h1>
+        <h1 className="mt-3 p-2">
+          {" "}
+          Добро пожаловать в систему электронных голосований на блокчейне
+        </h1>
       </header>
       <main>
         {window.ethereum?.isMetaMask && wallet.accounts.length < 1 && (

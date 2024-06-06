@@ -1,9 +1,8 @@
-export const VOTING_ADDRESS = "0x084b9114303F24dB4596C95522a7700e57Af0Fa3";
+export const VOTING_ADDRESS = "0x72072f095492C4EE546d7293893859CdE428Df82";
 
 export const VOTING_ABI = [
   {
     inputs: [],
-    payable: false,
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -68,12 +67,6 @@ export const VOTING_ABI = [
       },
       {
         indexed: false,
-        internalType: "string",
-        name: "category",
-        type: "string",
-      },
-      {
-        indexed: false,
         internalType: "uint256",
         name: "endDate",
         type: "uint256",
@@ -96,7 +89,6 @@ export const VOTING_ABI = [
     type: "event",
   },
   {
-    constant: true,
     inputs: [
       {
         internalType: "uint256",
@@ -117,12 +109,11 @@ export const VOTING_ABI = [
         type: "bool",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: true,
     inputs: [],
     name: "owner",
     outputs: [
@@ -132,12 +123,11 @@ export const VOTING_ABI = [
         type: "address",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: true,
     inputs: [
       {
         internalType: "uint256",
@@ -158,12 +148,11 @@ export const VOTING_ABI = [
         type: "uint256",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: true,
     inputs: [
       {
         internalType: "uint256",
@@ -189,11 +178,6 @@ export const VOTING_ABI = [
         type: "string",
       },
       {
-        internalType: "string",
-        name: "category",
-        type: "string",
-      },
-      {
         internalType: "uint256",
         name: "endDate",
         type: "uint256",
@@ -214,12 +198,11 @@ export const VOTING_ABI = [
         type: "address",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: false,
     inputs: [
       {
         internalType: "string",
@@ -229,11 +212,6 @@ export const VOTING_ABI = [
       {
         internalType: "string",
         name: "_description",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "_category",
         type: "string",
       },
       {
@@ -249,12 +227,10 @@ export const VOTING_ABI = [
     ],
     name: "createVoting",
     outputs: [],
-    payable: false,
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    constant: true,
     inputs: [
       {
         internalType: "uint256",
@@ -264,11 +240,6 @@ export const VOTING_ABI = [
     ],
     name: "getVotingSession",
     outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
       {
         internalType: "string",
         name: "",
@@ -305,12 +276,11 @@ export const VOTING_ABI = [
         type: "bool",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: true,
     inputs: [],
     name: "getVotingSessions",
     outputs: [
@@ -318,11 +288,6 @@ export const VOTING_ABI = [
         internalType: "uint256[]",
         name: "",
         type: "uint256[]",
-      },
-      {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
       },
       {
         internalType: "string[]",
@@ -350,12 +315,11 @@ export const VOTING_ABI = [
         type: "address[]",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: true,
     inputs: [
       {
         internalType: "uint256",
@@ -371,12 +335,11 @@ export const VOTING_ABI = [
         type: "string[]",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: false,
     inputs: [
       {
         internalType: "uint256",
@@ -391,12 +354,10 @@ export const VOTING_ABI = [
     ],
     name: "vote",
     outputs: [],
-    payable: false,
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    constant: true,
     inputs: [
       {
         internalType: "uint256",
@@ -417,12 +378,11 @@ export const VOTING_ABI = [
         type: "uint256[]",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: false,
     inputs: [
       {
         internalType: "uint256",
@@ -432,12 +392,10 @@ export const VOTING_ABI = [
     ],
     name: "revealResults",
     outputs: [],
-    payable: false,
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    constant: true,
     inputs: [],
     name: "getAllVotes",
     outputs: [
@@ -457,12 +415,11 @@ export const VOTING_ABI = [
         type: "uint256[]",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: true,
     inputs: [
       {
         internalType: "uint256",
@@ -483,12 +440,11 @@ export const VOTING_ABI = [
         type: "bool",
       },
     ],
-    payable: false,
     stateMutability: "view",
     type: "function",
+    constant: true,
   },
   {
-    constant: false,
     inputs: [
       {
         internalType: "uint256",
@@ -498,7 +454,6 @@ export const VOTING_ABI = [
     ],
     name: "endVoting",
     outputs: [],
-    payable: false,
     stateMutability: "nonpayable",
     type: "function",
   },

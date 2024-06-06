@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import "./Home.module.css"; // Создайте и используйте этот файл для стилизации страницы
+import "./Home.module.css";
 import { useState } from "react";
 
 const Home = () => {
@@ -148,4 +148,4 @@ const Home = () => {
   );
 };
 
-export default withAuth(Home);
+export default Home;
