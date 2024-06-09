@@ -6,12 +6,14 @@
 }
 
 h2 {
+  margin-left: 55px;
   margin-bottom: 20px;
 }
 
 .list {
+  margin-left: 55px;
   min-width: 400px;
-  width: 50%;
+  width: 60%;
   list-style-type: none;
   background-color: #393939;
   border-radius: 20px;

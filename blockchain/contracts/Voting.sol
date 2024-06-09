@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.19;
+
 contract Voting {
     struct VotingSession {
         uint id;
@@ -7,7 +8,6 @@ contract Voting {
         string description;
         string[] options;
         uint endDate;
-        bool isActive;
         bool resultsRevealed;
         address creator;
     }
@@ -33,10 +33,10 @@ contract Voting {
     }
 
     modifier activeVoting(uint _id) {
-        require(votingSessions[_id - 1].isActive, "Voting is not active");
         require(block.timestamp < votingSessions[_id - 1].endDate, "Voting time has expired");
         _;
     }
+
     modifier votingEnded(uint _id) {
         require(block.timestamp >= votingSessions[_id - 1].endDate, "Voting is still active");
         _;
@@ -46,7 +46,13 @@ contract Voting {
         owner = msg.sender;
     }
 
-    function createVoting(string memory _name, string memory _description, string[] memory _options,bool revealed, uint _endDate) public {
+    function createVoting(
+        string memory _name,
+        string memory _description,
+        string[] memory _options,
+        bool revealed,
+        uint _endDate
+    ) public {
         require(_endDate > block.timestamp, "The end date must be in the future");
 
         VotingSession memory newVoting = VotingSession({
@@ -55,7 +61,6 @@ contract Voting {
             description: _description,
             options: _options,
             endDate: _endDate,
-            isActive: true,
             resultsRevealed: revealed,
             creator: msg.sender
         });
@@ -64,20 +69,43 @@ contract Voting {
         emit VotingCreated(newVoting.id, _name, _description, _endDate);
     }
 
-    function getVotingSession(uint _id) public view returns (string memory, string memory, string[] memory, uint, bool, address, bool) {
+    function getVotingSession(uint _id) public view returns (
+        string memory,
+        string memory,
+        string[] memory,
+        uint,
+        bool,
+        address,
+        bool
+    ) {
         require(_id > 0 && _id <= votingSessions.length, "Invalid voting ID");
         VotingSession storage session = votingSessions[_id - 1];
-        return (session.name, session.description, session.options, session.endDate, session.isActive, session.creator, session.resultsRevealed);
+        return (
+            session.name,
+            session.description,
+            session.options,
+            session.endDate,
+            block.timestamp < session.endDate,
+            session.creator,
+            session.resultsRevealed
+        );
     }
 
-    function getVotingSessions() public view returns (uint[] memory, string[] memory, string[] memory, uint[] memory, bool[] memory, address[] memory) {
+    function getVotingSessions() public view returns (
+        uint[] memory,
+        string[] memory,
+        string[] memory,
+        uint[] memory,
+        bool[] memory,
+        address[] memory
+    ) {
         uint length = votingSessions.length;
 
         uint[] memory ids = new uint[](length);
         string[] memory names = new string[](length);
         string[] memory descriptions = new string[](length);
         uint[] memory endDates = new uint[](length);
-        bool[] memory statuses = new bool[](length);
+        bool[] memory activeStatuses = new bool[](length);
         address[] memory creators = new address[](length);
 
         for (uint i = 0; i < length; i++) {
@@ -86,11 +114,11 @@ contract Voting {
             names[i] = session.name;
             descriptions[i] = session.description;
             endDates[i] = session.endDate;
-            statuses[i] = session.isActive;
+            activeStatuses[i] = block.timestamp < session.endDate;
             creators[i] = session.creator;
         }
 
-        return (ids, names, descriptions, endDates, statuses, creators);
+        return (ids, names, descriptions, endDates, activeStatuses, creators);
     }
 
     function getVotingSessionOptions(uint _id) public view returns (string[] memory) {
@@ -120,7 +148,6 @@ contract Voting {
     function getVotes(uint _id) public view returns (string[] memory, uint[] memory) {
         require(_id > 0 && _id <= votingSessions.length, "Invalid voting ID");
         VotingSession storage session = votingSessions[_id - 1];
-        //require(session.resultsRevealed, "Results are not yet revealed");
 
         uint optionsLength = session.options.length;
         uint[] memory voteCounts = new uint[](optionsLength);
@@ -140,43 +167,12 @@ contract Voting {
         emit ResultsRevealed(_id);
     }
 
-    function getAllVotes() public view returns (uint[] memory, string[] memory, uint[] memory) {
-        uint sessionsLength = votingSessions.length;
-        uint totalOptions = 0;
-
-        for (uint i = 0; i < sessionsLength; i++) {
-            totalOptions += votingSessions[i].options.length;
-        }
-
-        uint[] memory sessionIds = new uint[](totalOptions);
-        string[] memory optionNames = new string[](totalOptions);
-        uint[] memory voteCounts = new uint[](totalOptions);
-
-        uint index = 0;
-        for (uint i = 0; i < sessionsLength; i++) {
-            VotingSession storage session = votingSessions[i];
-            if (session.resultsRevealed) {
-                for (uint j = 0; j < session.options.length; j++) {
-                    sessionIds[index] = session.id;
-                    optionNames[index] = session.options[j];
-                    voteCounts[index] = votes[session.id][session.options[j]];
-                    index++;
-                }
-            }
-        }
-
-        return (sessionIds, optionNames, voteCounts);
-    }
-
     function hasUserVoted(uint _id, address _user) public view returns (bool) {
         return hasVoted[_id][_user];
     }
 
-    function endVoting(uint _id) public onlyCreator(_id) {
-        VotingSession storage session = votingSessions[_id - 1];
-        require(session.isActive, "Voting is already ended");
-
-        session.isActive = false;
-        emit VotingEnded(_id);
-    }
+   function endVoting(uint _id) public onlyCreator(_id) {
+    votingSessions[_id - 1].endDate = block.timestamp;
+    emit VotingEnded(_id);
+}
 }

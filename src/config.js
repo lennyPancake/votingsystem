@@ -1,4 +1,4 @@
-export const VOTING_ADDRESS = "0x72072f095492C4EE546d7293893859CdE428Df82";
+export const VOTING_ADDRESS = "0x0b79a37796255829bB2f0c088B3038A0DFdD1AEd";
 
 export const VOTING_ABI = [
   {
@@ -184,11 +184,6 @@ export const VOTING_ABI = [
       },
       {
         internalType: "bool",
-        name: "isActive",
-        type: "bool",
-      },
-      {
-        internalType: "bool",
         name: "resultsRevealed",
         type: "bool",
       },
@@ -218,6 +213,11 @@ export const VOTING_ABI = [
         internalType: "string[]",
         name: "_options",
         type: "string[]",
+      },
+      {
+        internalType: "bool",
+        name: "revealed",
+        type: "bool",
       },
       {
         internalType: "uint256",
@@ -394,30 +394,6 @@ export const VOTING_ABI = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
-  },
-  {
-    inputs: [],
-    name: "getAllVotes",
-    outputs: [
-      {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
-      {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
-      },
-      {
-        internalType: "uint256[]",
-        name: "",
-        type: "uint256[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-    constant: true,
   },
   {
     inputs: [

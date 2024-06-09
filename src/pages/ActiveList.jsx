@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const ActiveList = () => {
   const [votingSessions, setVotingSessions] = useState([]);
   const navigate = useNavigate();
-  const active = true;
+
   useEffect(() => {
     const fetchData = async () => {
       const web3 = new Web3(window.ethereum);
@@ -47,6 +47,9 @@ const ActiveList = () => {
 
     fetchData();
   }, []);
+
+  const currentTime = Math.floor(Date.now() / 1000);
+
   return (
     <div className={style.main}>
       <h2>Список голосований</h2>
@@ -54,9 +57,9 @@ const ActiveList = () => {
         <p>Нет доступных голосований.</p>
       ) : (
         <ul className={style.list}>
-          {votingSessions.some((session) => session.isActive === active) ? (
+          {votingSessions.some((session) => session.endDate > currentTime) ? (
             votingSessions
-              .filter((session) => session.isActive === active)
+              .filter((session) => session.endDate > currentTime)
               .map((session) => (
                 <li key={session.id} className={style.listItem}>
                   <h3>{session.name}</h3>
@@ -66,7 +69,6 @@ const ActiveList = () => {
                     Дата завершения:{" "}
                     {new Date(session.endDate * 1000).toLocaleString()}
                   </p>
-                  <p>Активен: {session.isActive ? "Да" : "Нет"}</p>
                   <button
                     onClick={() => {
                       navigate(`/voting/${session.id}`);

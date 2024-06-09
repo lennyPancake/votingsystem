@@ -64,11 +64,6 @@ const MyVerticallyCenteredModal = (props: any) => {
           </Spinner>
         )}
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide} disabled={!props.isSuccess}>
-          Close
-        </Button>
-      </Modal.Footer>
     </Modal>
   );
 };

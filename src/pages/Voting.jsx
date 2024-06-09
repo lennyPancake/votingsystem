@@ -3,11 +3,11 @@ import Web3 from "web3";
 import { VOTING_ABI, VOTING_ADDRESS } from "../config";
 import style from "./Voting.module.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { ListGroup, ListGroupItem, Placeholder } from "react-bootstrap";
+import { ListGroup, ListGroupItem, Placeholder, Button } from "react-bootstrap";
 import VotingResults from "../components/VotingResults";
-import Button from "react-bootstrap/Button";
 import { useMetaMask } from "../hooks/useMetaMask";
 import withAuth from "../components/withAuth";
+import { votingStore } from "../store/VotingStore";
 
 const Voting = () => {
   const { id } = useParams();
@@ -116,6 +116,9 @@ const Voting = () => {
         .send({ from: accounts[0] });
       console.log("Голос успешно подан!");
       setHasVoted(true);
+
+      // Обновление результатов голосования
+      votingStore.loadResults(id);
     } catch (error) {
       console.error("Ошибка при голосовании", error);
     }
@@ -136,9 +139,10 @@ const Voting = () => {
       console.log("Сессия голосования успешно отключена!");
       navigate("/voting");
     } catch (error) {
-      console.error("Ошибка при отключени сессии голосования", error);
+      console.error("Ошибка при отключении сессии голосования", error);
     }
   };
+
   const revealResults = async () => {
     try {
       const accounts = await window.ethereum.request({
@@ -190,7 +194,7 @@ const Voting = () => {
             )}
             {votingSession.isActive && (
               <Button variant="outline-danger" onClick={endVoting}>
-                Удалить
+                Закончить голосование
               </Button>
             )}
           </div>

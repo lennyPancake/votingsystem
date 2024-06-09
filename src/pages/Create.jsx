@@ -5,6 +5,7 @@ import { Form, Container, InputGroup } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import withAuth from "../components/withAuth";
 import style from "./Create.module.css";
+import { useNavigate } from "react-router-dom";
 
 const CreateVotingForm = () => {
   const [votingName, setVotingName] = useState("");
@@ -12,7 +13,7 @@ const CreateVotingForm = () => {
   const [options, setOptions] = useState([]);
   const [optionText, setOptionText] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [revealed, setRevelead] = useState(false);
+  const [revealed, setRevelead] = useState(true);
 
   const handleOptionChange = (e, index) => {
     const updatedOptions = [...options];
@@ -26,6 +27,15 @@ const CreateVotingForm = () => {
       setOptions((prevOptions) => [...prevOptions, optionText]);
       setOptionText("");
     }
+  };
+
+  const resetForm = () => {
+    setVotingName("");
+    setDescription("");
+    setOptions([]);
+    setOptionText("");
+    setEndDate("");
+    setRevelead(true);
   };
 
   const createVoting = async (e) => {
@@ -56,6 +66,8 @@ const CreateVotingForm = () => {
         )
         .send({ from: accounts[0] });
       console.log("Голосование успешно создано!");
+
+      resetForm(); // Сброс формы после успешного создания голосования
     } catch (error) {
       console.error("Ошибка при создании голосования", error);
     }

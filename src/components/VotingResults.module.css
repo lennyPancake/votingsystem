@@ -7,3 +7,33 @@
   padding: 1%;
   border-style: outset;
 }
+.content {
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #343a40;
+  color: white;
+}
+
+.progress-bar {
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+}
+
+.placeholder {
+  margin-bottom: 10px;
+}
