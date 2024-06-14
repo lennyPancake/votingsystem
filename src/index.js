@@ -12,9 +12,6 @@ root.render(
   <RootStoreContext.Provider
     value={{
       userStore: new UserStore(),
-
-      //postStore: new PostStore(),
-      //commentStore: new CommentStore(),
     }}
   >
     <MetaMaskContextProvider>

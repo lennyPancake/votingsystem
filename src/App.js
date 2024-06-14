@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Create from "./pages/Create";
 import Voting from "./pages/Voting";
-import Navigation from "./components/Navigation/Navigation"; // Импортируем Navigation
+import Navigation from "./components/Navigation/Navigation";
 import { MetaMaskError } from "./components/MetamaskError";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -29,5 +29,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;

@@ -67,7 +67,7 @@ const CreateVotingForm = () => {
         .send({ from: accounts[0] });
       console.log("Голосование успешно создано!");
 
-      resetForm(); // Сброс формы после успешного создания голосования
+      resetForm();
     } catch (error) {
       console.error("Ошибка при создании голосования", error);
     }

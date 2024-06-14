@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { useMetaMask } from "../hooks/useMetaMask";
 import Login from "../pages/Login";
 
 const withAuth = (Component) => () => {
-  const { wallet, isConnecting, connectMetaMask } = useMetaMask();
-  const navigate = useNavigate();
+  const { wallet } = useMetaMask();
   if (!wallet.accounts.length) {
     return <Login />;
   }

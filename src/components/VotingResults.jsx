@@ -36,7 +36,7 @@ const VotingResults = observer(({ sessionId }) => {
       <table className={style.table}>
         <thead>
           <tr>
-            <th>Опция</th>
+            <th>Вариант</th>
             <th>Голоса</th>
             <th>Процент</th>
           </tr>

@@ -189,7 +189,7 @@ const Voting = () => {
           <div style={{ display: "flex", float: "right" }}>
             {!votingSession.resultRevealed && (
               <Button variant="outline-success" onClick={revealResults}>
-                Опубликовать результаты
+                Отобразить результаты
               </Button>
             )}
             {votingSession.isActive && (

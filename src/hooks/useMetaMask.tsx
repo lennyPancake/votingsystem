@@ -269,7 +269,6 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
 export const quitWallet = async () => {
   if (window.ethereum) {
-    const web3 = new Web3(window.ethereum);
     try {
       await window.ethereum.request({
         method: "wallet_revokePermissions",
